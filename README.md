@@ -181,7 +181,7 @@
 		（7）第二块：取到从ForeServletFilter中request.setAttribute()传递过来的值 home，
 		根据这个值home，借助反射机制调用ForeServlet类中的home()方法，
 		这样就达到了ForeServlet.home()方法被调用的效果
-		（8）第三块： 判断根据home的返回值"home.jsp"，既没有"%"开头，也没有"@",那么就调用request.getRequestDispatcher(redirect).forward(request, response);进行服务端跳转到 "home.jsp" 页面
+		（8）第三块： 判断根据home的返回值"home.jsp"，既没有"%"开头，也没有"@",那么就进行服务端跳转到 "home.jsp" 页面
 	4.通过这样一种模式，一个Servlet类就能满足CRUD一系列业务要求。
 		如果访问的路径是forecategory，就会调用foreServlet.category()方法
 		如果访问的路径是forecart，就会调用foreServlet.cart()方法
@@ -506,7 +506,8 @@
 			确认收货成功业务页面是 orderConfirmedPage.jsp
 			3）orderConfirmedPage.jsp显示"交易已经成功，卖家将收到您的货款。"
 		（5）评价：点击评价按钮，跳转到路径/forereview,这部分在13.评价产品进行介绍
-		（6）删除：在我的订单页上点击删除按钮，根据boughtPage.jsp中的ajax操作，会访问路径/foredeleteOrder，导致ForeServlet.deleteOrder方法被调用
+		（6）删除：在我的订单页上点击删除按钮，根据boughtPage.jsp中的ajax操作，
+		会访问路径/foredeleteOrder，导致ForeServlet.deleteOrder方法被调用
 			1）ForeServlet.deleteOrder()
 				1）获取参数oid
 				2）根据oid获取订单对象o
