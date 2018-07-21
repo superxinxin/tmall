@@ -1,10 +1,8 @@
 # tmall
-天猫商城项目：
-<Context path="/tmall" docBase="E:\others java projects\tmall\web" debug="0" reloadable="false" />
+#天猫商城项目
 该项目仿造天猫商城搭建了一个网上商城，主要从以下几个方面介绍该项目：（1）需求分析，（2）表结构分析，（3）实体类设计，（4）DAO类设计，（5）业务
-
 类设计，（6）后台设计之分类管理，（7）后台设计之其他管理，（8）前台设计之首页设计，（9）前台设计之无需登录状态，（10）前台设计之需要登录状态
-（1）需求分析
+##（1）需求分析
 	1.前端页面：
 		（1）商场首页
 			横向导航栏上提供4个分类的链接（展示）
@@ -83,11 +81,11 @@
 			分页查询
 			查看详情
 			发货
-（2）表结构设计
+##（2）表结构设计
 	一张图表示：
-（3）实体类设计
+##（3）实体类设计
 	User、Category、Property、Product、ProductImage、PropertyValue、Review、Order、OrderItem
-（4）DAO设计
+##（4）DAO设计
 	工具类、UserDAO、CategoryDAO、PropertyDAO、ProductDAO、ProductImageDAO、PropertyValueDAO、ReviewDAO、OrderDAO、OrderItemDAO
 	解释一下工具类：包括DBUtil和DateUtil。
 	DBUtil是数据库工具类，这个类的作用是初始化驱动，并且提供一个getConnection用于获取连接。在后续的所有DAO中，当需要获取连接的时候，都采用
@@ -99,19 +97,19 @@
 java.util.Date类。而为了在MySQL中的日期格式里保存时间信息，必须使用datetime类型的字段，而jdbc要获取datetime类型字段的信息，需要采用
 
 java.sql.Timestamp来获取，否则只会保留日期信息，而丢失时间信息。
-（5）业务类
+##（5）业务类
 	作为J2EE web 应用，一般会按照Servlet -> Service（业务类） -> DAO -> database的设计流程进行。当浏览器提交请求到tomcat web服务器的时候，
 
 对应的servlet的doGet/doPost方法会被调用，接着在servlet中调用Service类，然后在Service类中调用DAO类，最后在DAO中访问数据库获取相应的数据。但是在
 
 本项目，没有使用Service这一层。原因是在DAO进行了比较详细的设计，已经提供了很好的支持业务的方法。
-（6）后台设计之分类管理
+##（6）后台设计之分类管理
 	1.存在问题：在cart项目里，一个路径对用一个Servlet，项目小，没毛病。但是在这里，仅分类管理就需要增加，删除，编辑，修改，查询5个服务端功
 
 能，而分类，产品，属性，产品图片，用户，订单等等差不多都有这些增删改查功能，导致Servlet很多，web.xml配置文件就会臃肿，并且容易出错。
 	2.解决办法：以分类管理为例，用CategoryServlet一个类实现对分类的增删改查的功能，使用BackServletFilter来实现这个功能。
 		（1）首先在web.xml配置文件中，让所有的请求都会经过BackServletFilter
-		（2）假设访问的路径是：http://127.0.0.1:8080/tmall/admin_category_list
+		（2）假设访问的路径是：http: //127.0.0.1:8080/tmall/admin_category_list
 		（3）在BackServletFilter中通过request.getRequestURI()取出访问的uri: /tmall/admin_category_list
 		（4）然后截掉/tmall，得到路径/admin_category_list
 		（5）判断其是否以/admin开头
@@ -137,15 +135,17 @@ java.sql.Timestamp来获取，否则只会保留日期信息，而丢失时间�
 		如果访问的路径是admin_category_edit，就会调用categoryServlet.edit()方法
 		如果访问的路径是admin_category_update，就会调用categoryServlet.update()方法
 	5.JSP设计：listCategory.jsp用到了4个公共包含文件
-		（1）<%@include file="../include/admin/adminHeader.jsp"%>（展示头部信息）
-		（2）<%@include file="../include/admin/adminNavigator.jsp"%>（展示导航页）
-		（3）<%@include file="../include/admin/adminPage.jsp"%>（用于分页展示）
-		（4）<%@include file="../include/admin/adminFooter.jsp"%>（展示页脚信息）
+		```
+		<%@include file="../include/admin/adminHeader.jsp"%>（展示头部信息）
+		<%@include file="../include/admin/adminNavigator.jsp"%>（展示导航页）
+		<%@include file="../include/admin/adminPage.jsp"%>（用于分页展示）
+		<%@include file="../include/admin/adminFooter.jsp"%>（展示页脚信息）
+		```
 		listCategory.jsp作为视图，担当的角色是显示数据。
 		通过categoryDAO取得数据集合cs；
 		通过request.setAttribute放在“thecs"这个key中，为后续服务端跳转到jsp之后使用；
 		通过return "admin/listCategory.jsp"; 服务端跳转到视图listCategory.jsp页面，呈现所有分类数据。
-（7）后台设计之其他管理
+##（7）后台设计之其他管理
 	主要分为属性管理、产品管理、产品图片管理、产品属性值管理、用户管理、订单管理。设计思路基本与分类管理思路类似，故综合为其他管理，以作简
 
 要讲述	
@@ -161,13 +161,13 @@ ProductServlet里的editPropertyValue方法和updatePropertyValue方法。
 	6.订单管理：后台对订单管理的展示功能对应OrderServlet的list方法，此外，还有delivery方法，表示后台对该订单已发货，修改订单状态以呈现给前
 
 端用户。
-（8）前台设计之首页设计
+##（8）前台设计之首页设计
 	1.存在问题：与后台管理类似的，前台也存在按照传统方式一个路径对应一个Servlet的冗长的web.xml配置以及大量servlet类的问题。与后台管理同样
 
 的，采用Filter配合Servlet的设计模式来大大简化这么一个配置问题。
 	2.解决方法：类似分类管理的设计，结合ForeServletFilter和ForeServlet来解决这个问题。
 		（1）首先在web.xml配置文件中，让所有的请求都会经过ForeServletFilter
-		（2）还是假设访问的路径是：http://127.0.0.1:8080/tmall/forehome
+		（2）还是假设访问的路径是：http: //127.0.0.1:8080/tmall/forehome
  		（3）在ForeServletFilter 中通过request.getRequestURI()取出访问的uri: /tmall/forehome
 		（4）然后截掉/tmall，得到路径/forehome
 		（5）判断其是否以/fore开头,并且不是/foreServlet开头
@@ -195,12 +195,14 @@ ProductServlet里的editPropertyValue方法和updatePropertyValue方法。
 		如果访问的路径是foresearch，就会调用foreServlet.search()方法
 		...................
 	5.JSP设计：home.jsp用到了4个公共包含文件
-		（1）<%@include file="include/header.jsp"%>（展示头部信息）
-		（2）<%@include file="include/top.jsp"%>（展示导航页面）
-		（3）<%@include file="include/search.jsp"%>（展示搜索框）
-		（4）<%@include file="include/home/homePage.jsp"%>（展示主页）
-		（5）<%@include file="include/footer.jsp"%>  （展示页脚信息）
-（9）前台设计之无需登录状态
+		```
+		<%@include file="include/header.jsp"%>（展示头部信息）
+		<%@include file="include/top.jsp"%>（展示导航页面）
+		<%@include file="include/search.jsp"%>（展示搜索框）
+		<%@include file="include/home/homePage.jsp"%>（展示主页）
+		<%@include file="include/footer.jsp"%>  （展示页脚信息）
+		```
+##（9）前台设计之无需登录状态
 	前台页面主要分为两类：无需登录和需要登录的页面。在无需登录的页面中，有一些功能，无需登录也可以使用的，比如登录，注册，分类页面，查询，
 
 产品页面等。在需要登录的页面中，有一些功能，必须建立在已经登录的基础之上，比如购买，加入购物车，查看购物车，结算页面，订单页面等等。
@@ -229,7 +231,7 @@ registerPage.jsp的form提交数据到路径foreregister,导致ForeServlet.regis
 信息；如果对象存在，则把对象保存在session中，并客户端跳转到首页"@forehome"。
 	3.退出： 在ForeServlet的logout()方法里，将用户对象从session中移除。
 	4.产品页：product.jsp
-		（1）点击某产品，通过访问地址http://127.0.0.1:8080/tmall/foreproduct?pid=844。导致ForeServlet.product()方法被调用，在这个方法
+		（1）点击某产品，通过访问地址http: //127.0.0.1:8080/tmall/foreproduct?pid=844。导致ForeServlet.product()方法被调用，在这个方法
 
 中：
 			1）获取参数pid；
@@ -303,7 +305,7 @@ form，提交数据keyword到foresearch这个路径。
 searchResultPage.jsp，searchResultPage.jsp直接包含了productsBySearch.jsp，productsBySearch.jsp显示查询结果：
 			1）遍历ps，把每个产品的图片，价格，标题等信息显示出来；
 			2）如果ps为空，则显示 "没有满足条件的产品"。
-（10）前台设计之需要登录状态
+##（10）前台设计之需要登录状态
 	需要登录的前台功能都是和购买支付流程紧密相关的，所以先对购买流程及其对应的MySQL表关系进行简单介绍：
 	1.购买的业务流程：1）登录；2）访问产品页；3）立即购买；4）进入结算页面；5）加入购物车；6）查看购物车；7）选中购物车中的商品；8）又到了
 
@@ -320,7 +322,7 @@ searchResultPage.jsp，searchResultPage.jsp直接包含了productsBySearch.jsp�
 		（8）我的订单 —— 显示Order
 		（9）确认收货 —— 修改Order状态
 		来一波图。。。
-	3.立即购买：登录之后，点击立即购买，如访问地址http://127.0.0.1:8080/tmall/forebuyone?pid=844&num=3，带上了产品id：844和购买数量num：3
+	3.立即购买：登录之后，点击立即购买，如访问地址http: //127.0.0.1:8080/tmall/forebuyone?pid=844&num=3，带上了产品id：844和购买数量num：3
 
 。
 		（1）通过访问地址/forebuyone，导致ForeServlet.buyone()方法被调用。在这个方法中：
@@ -355,7 +357,7 @@ searchResultPage.jsp，searchResultPage.jsp直接包含了productsBySearch.jsp�
 
 buyPage.jsp中：1）遍历出订单项集合ois中的订单项数据；2）显示总金额
 	5.加入购物车： ForeServlet.addCart方法
-		（1）登录之后，点击加入购物车，会使用Ajax访问地址，如http://127.0.0.1:8080/tmall/foreaddCart?pid=264&num=4，带上了产品id：264
+		（1）登录之后，点击加入购物车，会使用Ajax访问地址，如http: //127.0.0.1:8080/tmall/foreaddCart?pid=264&num=4，带上了产品id：264
 
 和购买数量num：4。
 		（2）访问地址/foreaddCart导致ForeServlet.addCart()方法被调用。addCart()方法和立即购买中的ForeServlet.buyone()步骤做的事情是一
@@ -418,7 +420,7 @@ ForeServlet.deleteOrderItem方法被调用，在这个方法中：
 			4）返回字符串"success"
 		（3）选中产品后，提交到结算页面：在选中了购物车中的任意商品之后，结算按钮呈现可点击状态。点击之后，提交到结算页面，并带上多个
 
-被选中的OrderItem对象的id，如地址http://127.0.0.1:8080/tmall/forebuy?oiid=2&oiid=1，之后的流程就进入了前面步骤4的结算页面。
+被选中的OrderItem对象的id，如地址http: //127.0.0.1:8080/tmall/forebuy?oiid=2&oiid=1，之后的流程就进入了前面步骤4的结算页面。
 	9.订单状态图：
 		（1）一张图：
 		（2） 订单状态讲解 ：
@@ -535,10 +537,10 @@ orderConfirmedPage.jsp
 评价，但是默认是隐藏的。
 
 
-总结：
-（1）典型场景
+#总结：
+##（1）典型场景
 	购物车（立即购买、加入购物车、查看购物车页面、购物车页面操作），订单状态流转（生成订单、确认支付、后台发货、确认收货、评价），CRUD（后台各种功能），分页（后台各种功能），一类产品多属性配置（属性管理），一款产品多图片维护（产品图片管理），产品展示（前台首页、前台产品页），搜索查询（搜索），登录、注册（注册、登录、退出），登录验证（登录状态Filter）。
-（2）设计模式
+##（2）设计模式
 	1.MVC
 	MVC设计模式贯穿于整个后台与前台功能开发始末
 	2.Filter+Servlet+反射
