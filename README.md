@@ -315,7 +315,7 @@
 		（7）付款 —— 修改Order状态
 		（8）我的订单 —— 显示Order
 		（9）确认收货 —— 修改Order状态
-		来一波图。。。
+### 购物流程与订单及订单项关系图![购物流程与订单及订单项关系图](https://github.com/superxinxin/tmall/blob/master/web/img2/%E8%B4%AD%E7%89%A9%E6%B5%81%E7%A8%8B%E4%B8%8E%E8%AE%A2%E5%8D%95%E5%8F%8A%E8%AE%A2%E5%8D%95%E9%A1%B9%E5%85%B3%E7%B3%BB%E5%9B%BE.png)
 	3.立即购买：登录之后，点击立即购买，如访问地址http: //127.0.0.1:8080/tmall/forebuyone?pid=844&num=3，
 	带上了产品id：844和购买数量num：3。
 		（1）通过访问地址/forebuyone，导致ForeServlet.buyone()方法被调用。在这个方法中：
@@ -350,6 +350,7 @@
 			5）把订单项集合放在session的属性 "ois" 上；
 			6）把总价格放在request的属性 "total" 上；
 			7）服务端跳转到buy.jsp
+### 购物流程与订单项关系图![购物流程与订单项关系图](https://github.com/superxinxin/tmall/blob/master/web/img2/%E8%B4%AD%E7%89%A9%E6%B5%81%E7%A8%8B%E4%B8%8E%E8%AE%A2%E5%8D%95%E9%A1%B9%E5%85%B3%E7%B3%BB%E5%9B%BE.png)
 		（2）buy.jsp设计：与register.jsp相仿，buy.jsp也包含了header.jsp,top.jsp,footer.jsp等公共页面。
 		结算业务页面是buyPage.jsp。在buyPage.jsp中：
 			1）遍历出订单项集合ois中的订单项数据；
@@ -421,7 +422,8 @@
 		点击之后，提交到结算页面，并带上多个被选中的OrderItem对象的id，
 		如地址http: //127.0.0.1:8080/tmall/forebuy?oiid=2&oiid=1，之后的流程就进入了前面步骤4的结算页面。
 	9.订单状态图：
-		（1）一张图：
+		（1）订单状态图：
+### 订单状态图![订单状态图](https://github.com/superxinxin/tmall/blob/master/web/img2/%E8%AE%A2%E5%8D%95%E7%8A%B6%E6%80%81%E5%9B%BE.png）
 		（2） 订单状态讲解 ：
 			1）首先是创建订单，创建好之后，订单处于waitPay待付款状态；
 			2）接着是付款，付款后，订单处于waitDelivery 待发货状态；
