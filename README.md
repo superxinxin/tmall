@@ -82,8 +82,8 @@
 			查看详情
 			发货
 ## （2）表结构设计
-###一张图表示：
-	 ![表关系图](https://github.com/superxinxin/tmall/blob/2d3f1ca96257e8ff4844b3b49eda3cb80f289fce/web/imag2/%E8%A1%A8%E5%85%B3%E7%B3%BB.png)
+一张图表示：
+	 ![表关系图]()
 ## （3）实体类设计
 	User、Category、Property、Product、ProductImage、PropertyValue、Review、Order、OrderItem
 ## （4）DAO设计
