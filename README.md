@@ -162,7 +162,7 @@
 	2.解决方法：类似分类管理的设计，结合ForeServletFilter和ForeServlet来解决这个问题。
 		（1）首先在web.xml配置文件中，让所有的请求都会经过ForeServletFilter
 		（2）还是假设访问的路径是：http: //127.0.0.1:8080/tmall/forehome
- 		（3）在ForeServletFilter 中通过request.getRequestURI()取出访问的uri: /tmall/forehome
+		（3）在ForeServletFilter 中通过request.getRequestURI()取出访问的uri: /tmall/forehome
 		（4）然后截掉/tmall，得到路径/forehome
 		（5）判断其是否以/fore开头,并且不是/foreServlet开头
 		（6）如果是，取出fore之后的值home，并且服务端跳转到foreServlet
