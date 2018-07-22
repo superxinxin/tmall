@@ -423,7 +423,7 @@
 		如地址http: //127.0.0.1:8080/tmall/forebuy?oiid=2&oiid=1，之后的流程就进入了前面步骤4的结算页面。
 	9.订单状态图：
 		（1）订单状态图：
-### 订单状态图![订单状态图](https://github.com/superxinxin/tmall/blob/master/web/img2/%E8%AE%A2%E5%8D%95%E7%8A%B6%E6%80%81%E5%9B%BE.png）
+### 订单状态图![订单状态图](https://github.com/superxinxin/tmall/blob/master/web/img2/%E8%AE%A2%E5%8D%95%E7%8A%B6%E6%80%81%E5%9B%BE.png)
 		（2） 订单状态讲解 ：
 			1）首先是创建订单，创建好之后，订单处于waitPay待付款状态；
 			2）接着是付款，付款后，订单处于waitDelivery 待发货状态；
